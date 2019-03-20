@@ -12,5 +12,10 @@ app.use(express.static('root'));
 var io = socket(server);
 
 io.on('connection', socket => {
-  console.log('ser con')
+  socket.on('getKey', (data) => {
+    if(data.action === 'get') {
+      console.log('ser con', socket.id);
+      io.to(socket.id).emit('provideKey',{id:socket.id});
+    }
+  })
 });
